@@ -1,1 +1,1 @@
-# intljs-browser-check
+# intl.js-browser-check
