@@ -1,0 +1,1 @@
+# intljs-browser-check
