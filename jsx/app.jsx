@@ -4,6 +4,20 @@ const isSupported = (functionName) => {
   return supportedFunctions.indexOf(functionName) > -1;
 };
 
+const page = (
+  <React.Fragment>
+    <div className="jumbotron pb-2">
+      <h3 className="pb-3">Intl.js support in your browser</h3>
+      <BrowserInfo />
+    </div>
+    <div className="container">
+      <IntlJsSupport />
+    </div>
+  </React.Fragment>
+);
+
+ReactDOM.render(page, document.getElementById('root'));
+
 function FunctionLink(props) {
   const URL = `https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/${props.name}`;
   const title = `Link to MDN doc on Intl.${props.name}`;
@@ -26,7 +40,7 @@ function IntlJsSupport() {
   
   console.debug("functionNames:", functionNames);
   
-  const buildSupportTable = (names) => {
+  const buildReport = (names) => {
     const CHECK_MARK = 0x2714;
     return functionNames.reduce((obj, name) => {
       return {
@@ -35,12 +49,12 @@ function IntlJsSupport() {
     }, {});
   };
 
-  let table = buildSupportTable(functionNames);
+  const report = buildReport(functionNames);
 
-  const tableRows = Object.keys(table).map((item) => 
+  const tableRows = Object.keys(report).map((entry) => 
     <tr>
-       <td><FunctionLink name={item}/></td>
-       <td class="text-center">{table[item]}</td>
+       <td><FunctionLink name={entry}/></td>
+       <td class="text-center">{report[entry]}</td>
     </tr>
   );
     
@@ -56,16 +70,6 @@ function IntlJsSupport() {
 }
 
 function BrowserInfo() {
-  return (
-    <React.Fragment>
-      ({navigator.userAgent})
-    </React.Fragment>
-  );
+  return <div class="alert alert-light" role="alert">{navigator.userAgent}</div>;
 }
 
-ReactDOM.render(<BrowserInfo/>, document.getElementById('browserInfo'));
-
-ReactDOM.render(
-  <IntlJsSupport/>,
-  document.getElementById('main')
-);
