@@ -12,17 +12,13 @@ var page = React.createElement(
   React.createElement(
     "div",
     { className: "jumbotron pb-2" },
-    React.createElement(
-      "h3",
-      { className: "pb-3" },
-      "Intl.js support in your browser"
-    ),
+    React.createElement(Title, null),
     React.createElement(BrowserInfo, null)
   ),
   React.createElement(
     "div",
     { className: "container" },
-    React.createElement(IntlJsSupport, null)
+    React.createElement(Report, null)
   )
 );
 
@@ -38,7 +34,7 @@ function FunctionLink(props) {
   );
 }
 
-function IntlJsSupport() {
+function Report() {
   var functionNames = ["DateTimeFormat", "NumberFormat", "RelativeTimeFormat", "Collator", "ListFormat", "PluralRules", "Locale", "getCanonicalLocales"];
 
   console.debug("functionNames:", functionNames);
@@ -63,7 +59,7 @@ function IntlJsSupport() {
       ),
       React.createElement(
         "td",
-        { "class": "text-center" },
+        { className: "text-center" },
         report[entry]
       )
     );
@@ -71,7 +67,7 @@ function IntlJsSupport() {
 
   return React.createElement(
     "table",
-    { "class": "table table-md table-hover" },
+    { className: "table table-md table-hover" },
     React.createElement(
       "thead",
       null,
@@ -82,7 +78,7 @@ function IntlJsSupport() {
       ),
       React.createElement(
         "th",
-        { "class": "text-center" },
+        { className: "text-center" },
         "Supported"
       )
     ),
@@ -94,10 +90,18 @@ function IntlJsSupport() {
   );
 }
 
+function Title() {
+  return React.createElement(
+    "h3",
+    { className: "pb-3" },
+    "Intl.js support in your browser"
+  );
+}
+
 function BrowserInfo() {
   return React.createElement(
     "div",
-    { "class": "alert alert-light", role: "alert" },
+    { className: "alert alert-light", role: "alert" },
     navigator.userAgent
   );
 }
