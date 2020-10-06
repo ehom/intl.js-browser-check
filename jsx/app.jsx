@@ -7,11 +7,11 @@ const isSupported = (functionName) => {
 const page = (
   <React.Fragment>
     <div className="jumbotron pb-2">
-      <h3 className="pb-3">Intl.js support in your browser</h3>
+      <Title />
       <BrowserInfo />
     </div>
     <div className="container">
-      <IntlJsSupport />
+      <Report />
     </div>
   </React.Fragment>
 );
@@ -26,7 +26,7 @@ function FunctionLink(props) {
   );
 }
 
-function IntlJsSupport() {
+function Report() {
   const functionNames = [
     "DateTimeFormat",
     "NumberFormat", 
@@ -54,22 +54,26 @@ function IntlJsSupport() {
   const tableRows = Object.keys(report).map((entry) => 
     <tr>
        <td><FunctionLink name={entry}/></td>
-       <td class="text-center">{report[entry]}</td>
+       <td className="text-center">{report[entry]}</td>
     </tr>
   );
     
   return (
-    <table class="table table-md table-hover">
+    <table className="table table-md table-hover">
       <thead>
         <th>Intl Function Name</th>
-        <th class="text-center">Supported</th>
+        <th className="text-center">Supported</th>
       </thead>
       <tbody>{tableRows}</tbody>
     </table>
   );
 }
 
+function Title() {
+  return <h3 className="pb-3">Intl.js support in your browser</h3>;
+}
+
 function BrowserInfo() {
-  return <div class="alert alert-light" role="alert">{navigator.userAgent}</div>;
+  return <div className="alert alert-light" role="alert">{navigator.userAgent}</div>;
 }
 
