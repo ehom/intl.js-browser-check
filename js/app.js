@@ -6,6 +6,8 @@ var isSupported = function isSupported(functionName) {
   return supportedFunctions.indexOf(functionName) > -1;
 };
 
+var functionNames = ["DateTimeFormat", "NumberFormat", "RelativeTimeFormat", "Collator", "ListFormat", "PluralRules", "Locale", "getCanonicalLocales"];
+
 var page = React.createElement(
   React.Fragment,
   null,
@@ -18,7 +20,7 @@ var page = React.createElement(
   React.createElement(
     "div",
     { className: "container" },
-    React.createElement(Report, null)
+    React.createElement(Report, { functionNames: functionNames })
   )
 );
 
@@ -34,9 +36,8 @@ function FunctionLink(props) {
   );
 }
 
-function Report() {
-  var functionNames = ["DateTimeFormat", "NumberFormat", "RelativeTimeFormat", "Collator", "ListFormat", "PluralRules", "Locale", "getCanonicalLocales"];
-
+function Report(properties) {
+  var functionNames = properties.functionNames;
   console.debug("functionNames:", functionNames);
 
   var buildReport = function buildReport(names) {
