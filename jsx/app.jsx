@@ -4,6 +4,17 @@ const isSupported = (functionName) => {
   return supportedFunctions.indexOf(functionName) > -1;
 };
 
+const functionNames = [
+  "DateTimeFormat",
+  "NumberFormat",
+  "RelativeTimeFormat",
+  "Collator",
+  "ListFormat",
+  "PluralRules",
+  "Locale",
+  "getCanonicalLocales"
+];
+
 const page = (
   <React.Fragment>
     <div className="jumbotron pb-2">
@@ -11,7 +22,7 @@ const page = (
       <BrowserInfo />
     </div>
     <div className="container">
-      <Report />
+      <Report functionNames={functionNames} />
     </div>
   </React.Fragment>
 );
@@ -26,18 +37,8 @@ function FunctionLink(props) {
   );
 }
 
-function Report() {
-  const functionNames = [
-    "DateTimeFormat",
-    "NumberFormat", 
-    "RelativeTimeFormat",
-    "Collator",
-    "ListFormat",
-    "PluralRules",
-    "Locale",
-    "getCanonicalLocales"
-  ];
-  
+function Report(properties) {
+  const functionNames = properties.functionNames;
   console.debug("functionNames:", functionNames);
   
   const buildReport = (names) => {
