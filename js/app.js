@@ -24,6 +24,13 @@ var page = React.createElement(
   )
 );
 
+// TODO -- user facing strings should be
+// moved to an application string resource.
+
+var APP_NAME = "Intl.js Support";
+
+document.title = APP_NAME;
+
 ReactDOM.render(page, document.getElementById('root'));
 
 function FunctionLink(props) {
