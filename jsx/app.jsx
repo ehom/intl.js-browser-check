@@ -69,7 +69,7 @@ function Report(properties) {
   return (
     <table className="table table-md table-hover">
       <thead>
-        <th>Intl Function Name</th>
+        <th>Intl Object</th>
         <th className="text-center">Supported</th>
       </thead>
       <tbody>{tableRows}</tbody>
