@@ -82,7 +82,7 @@ function Report(properties) {
       React.createElement(
         "th",
         null,
-        "Intl Function Name"
+        "Intl Object"
       ),
       React.createElement(
         "th",
