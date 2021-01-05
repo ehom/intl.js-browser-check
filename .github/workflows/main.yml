@@ -28,5 +28,6 @@ jobs:
           npm install
           npm run-script build
           git config --global user.name $GITHUB_ACTOR
+          touch js/*.js
           git diff --quiet && git diff --staged --quiet || git commit -am 'update generated file'
           git push
