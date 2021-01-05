@@ -1,87 +1,111 @@
+let intljsTable = {
+  support: {},
+  nodejs: {}
+};
+
 const supportedFunctions = Object.getOwnPropertyNames(window["Intl"]);
 
-const isSupported = (functionName) => { 
+const isSupported = (functionName) => {
   return supportedFunctions.indexOf(functionName) > -1;
 };
 
-const functionNames = [
-  "DateTimeFormat",
-  "NumberFormat",
-  "RelativeTimeFormat",
-  "Collator",
-  "ListFormat",
-  "PluralRules",
-  "Locale",
-  "getCanonicalLocales"
-];
+fetch("https://raw.githubusercontent.com/ehom/nodejs-intl/main/intljs.json")
+  .then((response) => response.json())
+  .then((data) => {
+    console.debug("nodejs:", data);
+    for (const name of data["Intl.js"]) {
+      intljsTable.support[name] = { browser: false, nodejs: true };
+    }
+    intljsTable.nodejs["version"] = data["Node.js"].version;
+    console.log("nodejs version", intljsTable.nodejs.version);
+    main();
+  });
 
-const page = (
-  <React.Fragment>
-    <div className="jumbotron pb-2">
-      <Title />
-      <BrowserInfo />
-    </div>
-    <div className="container">
-      <Report functionNames={functionNames} />
-    </div>
-  </React.Fragment>
-);
+function main() {
+  for (const key of Object.keys(intljsTable.support)) {
+    intljsTable.support[key].browser = isSupported(key);
+  }
 
-// TODO -- user facing strings should be
-// moved to an application string resource.
+  console.debug("updated: ", intljsTable.support);
 
-const APP_NAME = "Intl.js Support";
+  const App = () => {
+    return (
+      <React.Fragment>
+        <div className="jumbotron pt-4 pb-2">
+          <h3 className="pb-3">Intl.js support in this browser</h3>
+          <BrowserInfo />
+        </div>
+        <div className="container">
+          <IntlJsSupport data={intljsTable.support} />
+        </div>
+        <hr />
+        <div className="container">
+          <NodejsInfo version={intljsTable.nodejs.version} />
+        </div>
+      </React.Fragment>
+    );
+  };
 
-document.title = APP_NAME;
-
-ReactDOM.render(page, document.getElementById('root'));
+  ReactDOM.render(<App />, document.getElementById("root"));
+}
 
 function FunctionLink(props) {
   const URL = `https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/${props.name}`;
   const title = `Link to MDN doc on Intl.${props.name}`;
   return (
-    <a href={URL} target="_blank" title={title}>{props.name}</a>
+    <a href={URL} target="_blank" title={title}>
+      {props.name}
+    </a>
   );
 }
 
-function Report(properties) {
-  const functionNames = properties.functionNames;
+function IntlJsSupport({ data }) {
+  const functionNames = Object.keys(data).sort();
+
   console.debug("functionNames:", functionNames);
-  
-  const buildReport = (names) => {
-    const CHECK_MARK = 0x2714;
-    return functionNames.reduce((obj, name) => {
-      return {
-        ...obj, [name]: isSupported(name) ? String.fromCharCode(CHECK_MARK) : ''
-      };
-    }, {});
-  };
 
-  const report = buildReport(functionNames);
+  const tableRows = functionNames.map((key) => {
+    const CHECK_MARK = String.fromCharCode(0x2714);
+    const browserSupport = data[key].browser ? CHECK_MARK : "";
+    const nodejsSupport = data[key].nodejs ? CHECK_MARK : "";
 
-  const tableRows = Object.keys(report).map((entry) => 
-    <tr>
-       <td><FunctionLink name={entry}/></td>
-       <td className="text-center">{report[entry]}</td>
-    </tr>
-  );
-    
+    return (
+      <tr>
+        <td>
+          <FunctionLink name={key} />
+        </td>
+        <td class="text-center">{browserSupport}</td>
+        <td class="text-center">{nodejsSupport}</td>
+      </tr>
+    );
+  });
+
   return (
-    <table className="table table-md table-hover">
+    <table class="table table-md table-hover">
       <thead>
-        <th>Intl Function Name</th>
-        <th className="text-center">Supported</th>
+        <th>Intl Object Name</th>
+        <th class="text-center">This browser</th>
+        <th class="text-center">*Node.js</th>
       </thead>
       <tbody>{tableRows}</tbody>
     </table>
   );
 }
 
-function Title() {
-  return <h3 className="pb-3">Intl.js support in your browser</h3>;
+function BrowserInfo() {
+  return (
+    <div class="alert alert-light" role="alert">
+      {navigator.userAgent}
+    </div>
+  );
 }
 
-function BrowserInfo() {
-  return <div className="alert alert-light" role="alert">{navigator.userAgent}</div>;
+function NodejsInfo({ version }) {
+  return (
+    <p>
+      <strong>*</strong>
+      Node.js version: {version}
+    </p>
+  );
 }
 
