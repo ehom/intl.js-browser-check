@@ -78,14 +78,14 @@ function IntlJsSupport({ data }) {
         <td>
           <FunctionLink name={key} />
         </td>
-        <td class="text-center">{browserSupport}</td>
-        <td class="text-center">{nodejsSupport}</td>
+        <td className="text-center">{browserSupport}</td>
+        <td className="text-center">{nodejsSupport}</td>
       </tr>
     );
   });
 
   return (
-    <table class="table table-md table-hover">
+    <table className="table table-md table-hover">
       <thead>
         <th>Intl Object Name</th>
         <th class="text-center">This browser</th>
@@ -98,7 +98,7 @@ function IntlJsSupport({ data }) {
 
 function BrowserInfo() {
   return (
-    <div class="alert alert-light" role="alert">
+    <div className="alert alert-light" role="alert">
       {navigator.userAgent}
     </div>
   );
