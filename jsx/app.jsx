@@ -21,6 +21,10 @@ fetch("https://raw.githubusercontent.com/ehom/nodejs-intl/main/intljs.json")
     main();
   });
 
+const APP_NAME = "Intl.js Support";
+
+document.title = APP_NAME;
+
 function main() {
   for (const key of Object.keys(intljsTable.support)) {
     intljsTable.support[key].browser = isSupported(key);
