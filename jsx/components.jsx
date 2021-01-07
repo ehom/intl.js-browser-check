@@ -32,7 +32,7 @@ function IntlJsSupport({ data }) {
   return (
     <table className="table table-md table-hover">
       <thead>
-        <th>Intl Object Name</th>
+        <th>Intl Object</th>
         <th class="text-center">This browser</th>
         <th class="text-center">*Node.js</th>
       </thead>
