@@ -50,7 +50,7 @@ function IntlJsSupport(_ref) {
       React.createElement(
         "th",
         null,
-        "Intl Object Name"
+        "Intl Object"
       ),
       React.createElement(
         "th",
