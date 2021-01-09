@@ -72,10 +72,19 @@ function IntlJsSupport(_ref) {
 }
 
 function BrowserInfo() {
+  var content = getTokens(navigator.userAgent).map(function (token) {
+    return React.createElement(
+      "span",
+      { className: "pt-1 pb-1 pl-2 pr-2 mr-1 rounded border border-info" },
+      token,
+      " "
+    );
+  });
+
   return React.createElement(
     "div",
-    { className: "alert alert-light", role: "alert" },
-    navigator.userAgent
+    null,
+    content
   );
 }
 
@@ -93,4 +102,36 @@ function NodejsInfo(_ref2) {
     "Node.js version: ",
     version
   );
+}
+
+function getTokens(s) {
+  var isLeftParen = function isLeftParen(c) {
+    return c === '(';
+  };
+  var RIGHT_PAREN = ')';
+  var tokens = [];
+  var endIndex = s.length - 1;
+
+  for (var position = 0; position < s.length; position++) {
+    var curChar = s[position];
+    if (curChar.match(/[a-z]/i)) {
+      var startIndex = position;
+      var index = s.indexOf(' ', startIndex);
+      if (index === -1) {
+        tokens.push(s.slice(startIndex));
+        break;
+      } else {
+        tokens.push(s.slice(startIndex, index));
+        position = index;
+      }
+    } else if (isLeftParen(curChar)) {
+      var _startIndex = position;
+      // Assumption: 
+      // String is well-formed, implying there is always a right paren.
+      var _index = s.indexOf(RIGHT_PAREN, _startIndex);
+      tokens.push(s.slice(_startIndex, _index + 1));
+      position = _index + 1;
+    }
+  }
+  return tokens;
 }
