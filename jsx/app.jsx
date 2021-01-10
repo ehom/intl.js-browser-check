@@ -35,7 +35,7 @@ function main() {
   const App = () => {
     return (
       <React.Fragment>
-        <div className="jumbotron pt-4 pb-2">
+        <div className="jumbotron pt-4 pb-4">
           <h3 className="pb-3">Intl.js support in this browser</h3>
           <BrowserInfo />
         </div>
