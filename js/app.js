@@ -81,7 +81,7 @@ function main() {
       null,
       React.createElement(
         "div",
-        { className: "jumbotron pt-4 pb-2" },
+        { className: "jumbotron pt-4 pb-4" },
         React.createElement(
           "h3",
           { className: "pb-3" },
